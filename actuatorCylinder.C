@@ -226,7 +226,7 @@ namespace Foam {
     // *** PUBLIC ***
     void actuatorCylinder::initializeArrays() {
 
-    	 // Fill AA[]
+         // Fill AA[]
         std::ifstream aaFile;
         aaFile.open("nacaaa.csv");
 
@@ -295,15 +295,15 @@ namespace Foam {
         collectVelocities(mesh, U);
         //Info << "Velocities in cylinder have been collected.\n";
 
-       	computeVolForce();
+        computeVolForce();
         //Info << "Actuator Cylinder has been run.\n";
 
         //volumeForce[i] += volForce;
-       	
+        
         // Loop over all cells in the hollow cylinder
         forAll (indices, ix) {
 
-        	label index = indices[ix];
+            label index = indices[ix];
 
             // current point being inscpected
             vector point = mesh.C()[index];
@@ -320,10 +320,10 @@ namespace Foam {
                 angle = 2 * PI - angle;
             }
 
-        	volForce.x() = interpolateForces(angle, volFx);
-        	volForce.y() = interpolateForces(angle, volFy);
-        	volumeForce[index] += volForce;
-            	
+            volForce.x() = interpolateForces(angle, volFx);
+            volForce.y() = interpolateForces(angle, volFy);
+            volumeForce[index] += volForce;
+                
         }
 
     }
@@ -336,7 +336,7 @@ namespace Foam {
         // start point to test point vector "r = point - center"
         vector centerToPoint(point - center);
 
-	   // squared magnitude of "r"
+       // squared magnitude of "r"
         scalar radialDist = magSqr(centerToPoint);
 
         // check magSqr(r) < extRadius^2 && mag(r) > intRadius^2
@@ -380,7 +380,7 @@ namespace Foam {
             // Loop over all cells and check if the cell center is in the actuator disc region
             forAll (indices, ix) {
 
-            	label index = indices[ix];
+                label index = indices[ix];
 
                 // current point being inscpected
                 vector point = mesh.C()[index];
@@ -421,11 +421,11 @@ namespace Foam {
     // *** PRIVATE ***
     void actuatorCylinder::computeVolForce() {
 
-    	// Solidity
-		scalar SIGMA = (NB * CH) / (2.0 * R);
+        // Solidity
+        scalar SIGMA = (NB * CH) / (2.0 * R);
 
-		// Global Reynolds number
-		scalar RE = (RPM * R * CH * PI) / (30 * NU);
+        // Global Reynolds number
+        scalar RE = (RPM * R * CH * PI) / (30 * NU);
 
         // Control point
         label j;
@@ -657,8 +657,8 @@ namespace Foam {
         }
 
         Info << "Power coefficient[" << ID << "] ... " << getCP(Qt) << "\n\n";
-		
-		Cp = getCP(Qt);
+        
+        Cp = getCP(Qt);
 
     }
 
@@ -729,7 +729,7 @@ namespace Foam {
     // *** PRIVATE ***
     scalar actuatorCylinder::getCP(scalar Qt[N]) {
 
-    	label sign = 0;
+        label sign = 0;
         if (spin == 1) {sign = -1;}
         if (spin == 0) {sign =  1;}
 
@@ -827,7 +827,7 @@ namespace Foam {
 
     // *** PRIVATE ***
     void actuatorCylinder::parse(std::string cname, scalar C[ROWS][COLS]) {
-    	
+        
         // cname: ...... coefficients file name
         // C[][]: ...... coefficients arrays
 
@@ -871,28 +871,28 @@ namespace Foam {
     // *** PRIVATE ***
     scalar actuatorCylinder::interpolateForces(scalar angle, scalar volF[N]) {
 
-    	label i;
-    	scalar loc = 0.;
+        label i;
+        scalar loc = 0.;
 
-    	if (angle < t[0] || angle > t[N - 1]) {
+        if (angle < t[0] || angle > t[N - 1]) {
 
-    		loc = (angle - t[N - 1]) / (t[0] - t[N - 1]);
-    		return volF[N - 1] + loc * (volF[0] - volF[N - 1]);
+            loc = (angle - t[N - 1]) / (t[0] - t[N - 1]);
+            return volF[N - 1] + loc * (volF[0] - volF[N - 1]);
 
-    	}
+        }
 
-    	for (i = 0; i < N; i++) {
+        for (i = 0; i < N; i++) {
 
-    		if (angle >= t[i] && angle <= t[i + 1]) {
+            if (angle >= t[i] && angle <= t[i + 1]) {
 
-    			loc = (angle - t[i]) / (t[i + 1] - t[i]);
-    			break;
-    			
-    		}
+                loc = (angle - t[i]) / (t[i + 1] - t[i]);
+                break;
+                
+            }
 
-    	}
+        }
 
-    	return volF[i] + loc * (volF[i + 1] - volF[i]);
+        return volF[i] + loc * (volF[i + 1] - volF[i]);
 
     }
 
@@ -901,13 +901,13 @@ namespace Foam {
     // *** PRIVATE ***
     void actuatorCylinder::initializeLookUpTables(scalar C[ROWS][COLS]) {
 
-    	for (label i = 0; i < ROWS; i++) {
+        for (label i = 0; i < ROWS; i++) {
 
-    		for (label j = 0; j < COLS; j++) {
+            for (label j = 0; j < COLS; j++) {
 
-    			C[i][j] = 0;
-    		}
-    	}
+                C[i][j] = 0;
+            }
+        }
 
     }
 
