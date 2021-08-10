@@ -2,15 +2,15 @@
 // scalar current_time = runTime.value();
 
 if (1) {
-	
-	#include <fstream>
+    
+    #include <fstream>
     std::ofstream file("results");
 
-	for (int i = 0; i < noc; i++){
+    for (int i = 0; i < noc; i++){
 
         file << cylinders[i].Cp << "\n";
 
     }
 
-	file.close();
+    file.close();
 }
