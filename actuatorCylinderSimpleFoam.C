@@ -70,14 +70,14 @@ int main(int argc, char *argv[])
     for (int i = 0; i < noc; i++){
 
         cylinders[i] = actuatorCylinder();
-	    cylinders[i].setID(i);
+        cylinders[i].setID(i);
         cylinders[i].readGeometry(mesh);
         cylinders[i].initializeArrays();
 
-	    Info << "actuatorCylinder" << i << " was created." << "\n";
+        Info << "actuatorCylinder" << i << " was created." << "\n";
 
     }
-	
+    
     while (simple.loop(runTime))
     {
         Info<< "Time = " << runTime.timeName() << nl << endl;
@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
 
     }
 
-	#include "writeToFile.H"
+    #include "writeToFile.H"
 
     Info<< "End\n" << endl;
 
